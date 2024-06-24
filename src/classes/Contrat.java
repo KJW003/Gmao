@@ -1,15 +1,14 @@
 import java.util.Date;
 
 public class Contrat {
-    private Integer id;
-    private Integer clientId;
+    private int id;
+    private int clientId;
     private Date dateDebut;
     private Date dateFin;
     private String termes;
     private Double montant;
 
-    // Constructeur
-    public Contrat(Integer id, Integer clientId, Date dateDebut, Date dateFin, String termes, Double montant) {
+    public Contrat(int id, int clientId, Date dateDebut, Date dateFin, String termes, Double montant) {
         this.id = id;
         this.clientId = clientId;
         this.dateDebut = dateDebut;
@@ -19,19 +18,19 @@ public class Contrat {
     }
 
     // Getters et setters
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public Integer getClientId() {
+    public int getClientId() {
         return clientId;
     }
 
-    public void setClientId(Integer clientId) {
+    public void setClientId(int clientId) {
         this.clientId = clientId;
     }
 

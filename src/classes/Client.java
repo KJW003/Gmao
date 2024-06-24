@@ -1,12 +1,13 @@
 public class Client {
+    private int id;
     private String nom;
     private String numeroIFU;
     private String RCCM;
     private String adresse;
     private String codeAPE;
 
-    // Constructeur
-    public Client(String nom, String numeroIFU, String RCCM, String adresse, String codeAPE) {
+    public Client(int id, String nom, String numeroIFU, String RCCM, String adresse, String codeAPE) {
+        this.id = id;
         this.nom = nom;
         this.numeroIFU = numeroIFU;
         this.RCCM = RCCM;
@@ -15,6 +16,14 @@ public class Client {
     }
 
     // Getters et setters
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getNom() {
         return nom;
     }

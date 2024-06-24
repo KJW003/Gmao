@@ -1,23 +1,32 @@
 import java.util.Date;
 
 public class Devis {
-    private Double montant;
+    private int id;
+    private double montant;
     private Date dateCreation;
-    private Boolean validite;
+    private boolean validite;
 
-    // Constructeur
-    public Devis(Double montant, Date dateCreation, Boolean validite) {
+    public Devis(int id, double montant, Date dateCreation, boolean validite) {
+        this.id = id;
         this.montant = montant;
         this.dateCreation = dateCreation;
         this.validite = validite;
     }
 
     // Getters et setters
-    public Double getMontant() {
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public double getMontant() {
         return montant;
     }
 
-    public void setMontant(Double montant) {
+    public void setMontant(double montant) {
         this.montant = montant;
     }
 
@@ -29,11 +38,11 @@ public class Devis {
         this.dateCreation = dateCreation;
     }
 
-    public Boolean getValidite() {
+    public boolean isValidite() {
         return validite;
     }
 
-    public void setValidite(Boolean validite) {
+    public void setValidite(boolean validite) {
         this.validite = validite;
     }
 }

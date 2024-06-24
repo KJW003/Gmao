@@ -1,26 +1,55 @@
 import java.util.Date;
 
 public class Maintenance {
-    private Integer id;
+    private int id;
+    private int clientId;
+    private int operateurId;
+    private int responsableMaintenanceId;
     private String type;
     private String details;
     private Date dateCreation;
 
-    // Constructeur
-    public Maintenance(Integer id, String type, String details, Date dateCreation) {
+    public Maintenance(int id, int clientId, int operateurId, int responsableMaintenanceId, String type, String details, Date dateCreation) {
         this.id = id;
+        this.clientId = clientId;
+        this.operateurId = operateurId;
+        this.responsableMaintenanceId = responsableMaintenanceId;
         this.type = type;
         this.details = details;
         this.dateCreation = dateCreation;
     }
 
     // Getters et setters
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
+    }
+
+    public int getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(int clientId) {
+        this.clientId = clientId;
+    }
+
+    public int getOperateurId() {
+        return operateurId;
+    }
+
+    public void setOperateurId(int operateurId) {
+        this.operateurId = operateurId;
+    }
+
+    public int getResponsableMaintenanceId() {
+        return responsableMaintenanceId;
+    }
+
+    public void setResponsableMaintenanceId(int responsableMaintenanceId) {
+        this.responsableMaintenanceId = responsableMaintenanceId;
     }
 
     public String getType() {

@@ -1,18 +1,29 @@
 import java.util.Date;
 
 public class CompteRendu {
+    private int id;
     private String details;
     private Date date;
-    private Boolean validite;
+    private boolean validite;
+    private int maintenanceId;
 
-    // Constructeur
-    public CompteRendu(String details, Date date, Boolean validite) {
+    public CompteRendu(int id, String details, Date date, boolean validite, int maintenanceId) {
+        this.id = id;
         this.details = details;
         this.date = date;
         this.validite = validite;
+        this.maintenanceId = maintenanceId;
     }
 
     // Getters et setters
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getDetails() {
         return details;
     }
@@ -29,11 +40,19 @@ public class CompteRendu {
         this.date = date;
     }
 
-    public Boolean getValidite() {
+    public boolean isValidite() {
         return validite;
     }
 
-    public void setValidite(Boolean validite) {
+    public void setValidite(boolean validite) {
         this.validite = validite;
+    }
+
+    public int getMaintenanceId() {
+        return maintenanceId;
+    }
+
+    public void setMaintenanceId(int maintenanceId) {
+        this.maintenanceId = maintenanceId;
     }
 }
