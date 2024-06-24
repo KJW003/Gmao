@@ -1,11 +1,13 @@
 public class ResponsableMaintenance {
     private String nom;
     private String identifiant;
+    private String specialisation; 
 
     // Constructeur
-    public ResponsableMaintenance(String nom, String identifiant) {
+    public ResponsableMaintenance(String nom, String identifiant, String specialisation) {
         this.nom = nom;
         this.identifiant = identifiant;
+        this.specialisation = specialisation;
     }
 
     // Getters et setters
@@ -23,5 +25,13 @@ public class ResponsableMaintenance {
 
     public void setIdentifiant(String identifiant) {
         this.identifiant = identifiant;
+    }
+
+    public String getSpecialisation() {
+        return specialisation;
+    }
+
+    public void setSpecialisation(String specialisation) {
+        this.specialisation = specialisation;
     }
 }
