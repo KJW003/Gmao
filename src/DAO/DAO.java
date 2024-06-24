@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class DatabaseDAO {
+public class DAOUtils {
     // Variables globales de connexion
     final static String URL = "jdbc:oracle:thin:@localhost:1521:xe";
     final static String LOGIN = "prof";
@@ -41,7 +41,7 @@ public class DatabaseDAO {
             }
             return retour;
         }
-
+/*
         public Administrateur getAdministrateur(int id) {
             Connection con = null;
             PreparedStatement ps = null;
@@ -600,3 +600,4 @@ public class DatabaseDAO {
     }
 
 }
+*/

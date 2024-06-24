@@ -1,6 +1,5 @@
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class ContratDAO {
@@ -14,9 +13,8 @@ public class ContratDAO {
     }
 
     public int ajouter(Contrat contrat) {
-        String query = "INSERT INTO contrat (clientId, dateDebut, dateFin, termes, montant) VALUES (?, ?, ?, ?, ?)";
         try (Connection con = DriverManager.getConnection(DAOUtils.URL, DAOUtils.LOGIN, DAOUtils.PASS);
-             PreparedStatement ps = con.prepareStatement(query)) {
+             PreparedStatement ps = con.prepareStatement("INSERT INTO contrat (clientId, dateDebut, dateFin, termes, montant) VALUES (?, ?, ?, ?, ?)")) {
             ps.setInt(1, contrat.getClientId());
             ps.setDate(2, new java.sql.Date(contrat.getDateDebut().getTime()));
             ps.setDate(3, new java.sql.Date(contrat.getDateFin().getTime()));
@@ -30,20 +28,12 @@ public class ContratDAO {
     }
 
     public Contrat getContrat(int id) {
-        String query = "SELECT * FROM contrat WHERE id = ?";
         try (Connection con = DriverManager.getConnection(DAOUtils.URL, DAOUtils.LOGIN, DAOUtils.PASS);
-             PreparedStatement ps = con.prepareStatement(query)) {
+             PreparedStatement ps = con.prepareStatement("SELECT * FROM contrat WHERE id = ?")) {
             ps.setInt(1, id);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    return new Contrat(
-                            rs.getInt("id"),
-                            rs.getInt("clientId"),
-                            rs.getDate("dateDebut"),
-                            rs.getDate("dateFin"),
-                            rs.getString("termes"),
-                            rs.getDouble("montant")
-                    );
+                    return new Contrat(rs.getInt("id"), rs.getInt("clientId"), rs.getDate("dateDebut"), rs.getDate("dateFin"), rs.getString("termes"), rs.getDouble("montant"));
                 }
             }
         } catch (SQLException e) {
@@ -54,19 +44,11 @@ public class ContratDAO {
 
     public List<Contrat> getListeContrats() {
         List<Contrat> contrats = new ArrayList<>();
-        String query = "SELECT * FROM contrat";
         try (Connection con = DriverManager.getConnection(DAOUtils.URL, DAOUtils.LOGIN, DAOUtils.PASS);
-             PreparedStatement ps = con.prepareStatement(query);
+             PreparedStatement ps = con.prepareStatement("SELECT * FROM contrat");
              ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
-                contrats.add(new Contrat(
-                        rs.getInt("id"),
-                        rs.getInt("clientId"),
-                        rs.getDate("dateDebut"),
-                        rs.getDate("dateFin"),
-                        rs.getString("termes"),
-                        rs.getDouble("montant")
-                ));
+                contrats.add(new Contrat(rs.getInt("id"), rs.getInt("clientId"), rs.getDate("dateDebut"), rs.getDate("dateFin"), rs.getString("termes"), rs.getDouble("montant")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -75,9 +57,8 @@ public class ContratDAO {
     }
 
     public int mettreAJour(Contrat contrat) {
-        String query = "UPDATE contrat SET clientId = ?, dateDebut = ?, dateFin = ?, termes = ?, montant = ? WHERE id = ?";
         try (Connection con = DriverManager.getConnection(DAOUtils.URL, DAOUtils.LOGIN, DAOUtils.PASS);
-             PreparedStatement ps = con.prepareStatement(query)) {
+             PreparedStatement ps = con.prepareStatement("UPDATE contrat SET clientId = ?, dateDebut = ?, dateFin = ?, termes = ?, montant = ? WHERE id = ?")) {
             ps.setInt(1, contrat.getClientId());
             ps.setDate(2, new java.sql.Date(contrat.getDateDebut().getTime()));
             ps.setDate(3, new java.sql.Date(contrat.getDateFin().getTime()));
@@ -92,38 +73,13 @@ public class ContratDAO {
     }
 
     public int supprimer(int id) {
-        String query = "DELETE FROM contrat WHERE id = ?";
         try (Connection con = DriverManager.getConnection(DAOUtils.URL, DAOUtils.LOGIN, DAOUtils.PASS);
-             PreparedStatement ps = con.prepareStatement(query)) {
+             PreparedStatement ps = con.prepareStatement("DELETE FROM contrat WHERE id = ?")) {
             ps.setInt(1, id);
             return ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return 0;
-    }
-
-    public List<Contrat> getContratsForClient(int clientId) {
-        List<Contrat> contrats = new ArrayList<>();
-        String query = "SELECT * FROM contrat WHERE clientId = ?";
-        try (Connection con = DriverManager.getConnection(DAOUtils.URL, DAOUtils.LOGIN, DAOUtils.PASS);
-             PreparedStatement ps = con.prepareStatement(query)) {
-            ps.setInt(1, clientId);
-            try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
-                    contrats.add(new Contrat(
-                            rs.getInt("id"),
-                            rs.getInt("clientId"),
-                            rs.getDate("dateDebut"),
-                            rs.getDate("dateFin"),
-                            rs.getString("termes"),
-                            rs.getDouble("montant")
-                    ));
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return contrats;
     }
 }
