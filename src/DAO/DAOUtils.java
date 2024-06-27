@@ -1,7 +1,10 @@
+package DAO;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import classes.Administrateur;
 
 public class DAOUtils {
     // Variables globales de connexion
@@ -9,15 +12,15 @@ public class DAOUtils {
     final static String LOGIN = "prof";
     final static String PASS = "isgeic2019";
 
-    public DatabaseDAO() {
+    public DAOUtils() {
         try {
             Class.forName("oracle.jdbc.OracleDriver");
         } catch (ClassNotFoundException e) {
             System.err.println("Impossible de charger le pilote de BDD, ne pas oublier d'importer le fichier .jar dans le projet");
         }
     }
-
-    public class AdministrateurDAO {
+}
+   /* public class AdministrateurDAO {
         public int ajouter(Administrateur administrateur) {
             Connection con = null;
             PreparedStatement ps = null;
@@ -41,7 +44,8 @@ public class DAOUtils {
             }
             return retour;
         }
-/*
+    }
+/*  
         public Administrateur getAdministrateur(int id) {
             Connection con = null;
             PreparedStatement ps = null;

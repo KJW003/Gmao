@@ -1,3 +1,4 @@
+package classes;
 public class ResponsableMaintenance {
     private int id;
     private String nom;

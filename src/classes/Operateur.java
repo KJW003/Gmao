@@ -1,3 +1,4 @@
+package classes;
 public class Operateur {
     private int id;
     private String nom;

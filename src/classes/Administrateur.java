@@ -1,3 +1,4 @@
+package classes;
 public class Administrateur {
     private String nom;
     private String identifiant;
