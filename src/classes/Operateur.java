@@ -1,16 +1,17 @@
 public class Operateur {
     private int id;
-    private int clientId;
     private String nom;
     private String identifiant;
     private String specialisation;
+    private int clientId;
 
-    public Operateur(int id, int clientId, String nom, String identifiant, String specialisation) {
+    // Constructeur
+    public Operateur(int id, String nom, String identifiant, String specialisation, int clientId) {
         this.id = id;
-        this.clientId = clientId;
         this.nom = nom;
         this.identifiant = identifiant;
         this.specialisation = specialisation;
+        this.clientId = clientId;
     }
 
     // Getters et setters
@@ -20,14 +21,6 @@ public class Operateur {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public int getClientId() {
-        return clientId;
-    }
-
-    public void setClientId(int clientId) {
-        this.clientId = clientId;
     }
 
     public String getNom() {
@@ -53,4 +46,13 @@ public class Operateur {
     public void setSpecialisation(String specialisation) {
         this.specialisation = specialisation;
     }
+
+    public int getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(int clientId) {
+        this.clientId = clientId;
+    }
 }
+	

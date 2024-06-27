@@ -8,6 +8,7 @@ public class Contrat {
     private String termes;
     private Double montant;
 
+    // Constructeur
     public Contrat(int id, int clientId, Date dateDebut, Date dateFin, String termes, Double montant) {
         this.id = id;
         this.clientId = clientId;

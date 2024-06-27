@@ -6,6 +6,7 @@ public class Client {
     private String adresse;
     private String codeAPE;
 
+    // Constructeur
     public Client(int id, String nom, String numeroIFU, String RCCM, String adresse, String codeAPE) {
         this.id = id;
         this.nom = nom;

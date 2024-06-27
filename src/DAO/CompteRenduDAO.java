@@ -14,10 +14,11 @@ public class CompteRenduDAO {
 
     public int ajouter(CompteRendu compteRendu) {
         try (Connection con = DriverManager.getConnection(DAOUtils.URL, DAOUtils.LOGIN, DAOUtils.PASS);
-             PreparedStatement ps = con.prepareStatement("INSERT INTO compteRendu (idMaintenance, details, date) VALUES (?, ?, ?)")) {
-            ps.setInt(1, compteRendu.getIdMaintenance());
-            ps.setString(2, compteRendu.getDetails());
-            ps.setDate(3, new java.sql.Date(compteRendu.getDate().getTime()));
+             PreparedStatement ps = con.prepareStatement("INSERT INTO compteRendu (details, date, validite, maintenanceId) VALUES (?, ?, ?, ?)")) {
+            ps.setString(1, compteRendu.getDetails());
+            ps.setDate(2, new java.sql.Date(compteRendu.getDate().getTime()));
+            ps.setBoolean(3, compteRendu.isValidite());
+            ps.setInt(4, compteRendu.getMaintenanceId());
             return ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -31,7 +32,7 @@ public class CompteRenduDAO {
             ps.setInt(1, id);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    return new CompteRendu(rs.getInt("id"), rs.getInt("idMaintenance"), rs.getString("details"), rs.getDate("date"));
+                    return new CompteRendu(rs.getInt("id"), rs.getString("details"), rs.getDate("date"), rs.getBoolean("validite"), rs.getInt("maintenanceId"));
                 }
             }
         } catch (SQLException e) {
@@ -46,7 +47,7 @@ public class CompteRenduDAO {
              PreparedStatement ps = con.prepareStatement("SELECT * FROM compteRendu");
              ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
-                compteRendus.add(new CompteRendu(rs.getInt("id"), rs.getInt("idMaintenance"), rs.getString("details"), rs.getDate("date")));
+                compteRendus.add(new CompteRendu(rs.getInt("id"), rs.getString("details"), rs.getDate("date"), rs.getBoolean("validite"), rs.getInt("maintenanceId")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -56,11 +57,12 @@ public class CompteRenduDAO {
 
     public int mettreAJour(CompteRendu compteRendu) {
         try (Connection con = DriverManager.getConnection(DAOUtils.URL, DAOUtils.LOGIN, DAOUtils.PASS);
-             PreparedStatement ps = con.prepareStatement("UPDATE compteRendu SET idMaintenance = ?, details = ?, date = ? WHERE id = ?")) {
-            ps.setInt(1, compteRendu.getIdMaintenance());
-            ps.setString(2, compteRendu.getDetails());
-            ps.setDate(3, new java.sql.Date(compteRendu.getDate().getTime()));
-            ps.setInt(4, compteRendu.getId());
+             PreparedStatement ps = con.prepareStatement("UPDATE compteRendu SET details = ?, date = ?, validite = ?, maintenanceId = ? WHERE id = ?")) {
+            ps.setString(1, compteRendu.getDetails());
+            ps.setDate(2, new java.sql.Date(compteRendu.getDate().getTime()));
+            ps.setBoolean(3, compteRendu.isValidite());
+            ps.setInt(4, compteRendu.getMaintenanceId());
+            ps.setInt(5, compteRendu.getId());
             return ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -77,21 +79,5 @@ public class CompteRenduDAO {
             e.printStackTrace();
         }
         return 0;
-    }
-
-    public List<CompteRendu> getCompteRendusForMaintenance(int idMaintenance) {
-        List<CompteRendu> compteRendus = new ArrayList<>();
-        try (Connection con = DriverManager.getConnection(DAOUtils.URL, DAOUtils.LOGIN, DAOUtils.PASS);
-             PreparedStatement ps = con.prepareStatement("SELECT * FROM compteRendu WHERE idMaintenance = ?")) {
-            ps.setInt(1, idMaintenance);
-            try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
-                    compteRendus.add(new CompteRendu(rs.getInt("id"), rs.getInt("idMaintenance"), rs.getString("details"), rs.getDate("date")));
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return compteRendus;
     }
 }

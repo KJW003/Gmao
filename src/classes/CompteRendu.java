@@ -7,6 +7,7 @@ public class CompteRendu {
     private boolean validite;
     private int maintenanceId;
 
+    // Constructeur
     public CompteRendu(int id, String details, Date date, boolean validite, int maintenanceId) {
         this.id = id;
         this.details = details;

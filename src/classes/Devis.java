@@ -6,6 +6,7 @@ public class Devis {
     private Date dateCreation;
     private boolean validite;
 
+    // Constructeur
     public Devis(int id, double montant, Date dateCreation, boolean validite) {
         this.id = id;
         this.montant = montant;

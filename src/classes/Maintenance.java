@@ -2,21 +2,22 @@ import java.util.Date;
 
 public class Maintenance {
     private int id;
-    private int clientId;
-    private int operateurId;
-    private int responsableMaintenanceId;
     private String type;
     private String details;
     private Date dateCreation;
+    private int operateurId;
+    private int clientId;
+    private int responsableMaintenanceId;
 
-    public Maintenance(int id, int clientId, int operateurId, int responsableMaintenanceId, String type, String details, Date dateCreation) {
+    // Constructeur
+    public Maintenance(int id, String type, String details, Date dateCreation, int operateurId, int clientId, int responsableMaintenanceId) {
         this.id = id;
-        this.clientId = clientId;
-        this.operateurId = operateurId;
-        this.responsableMaintenanceId = responsableMaintenanceId;
         this.type = type;
         this.details = details;
         this.dateCreation = dateCreation;
+        this.operateurId = operateurId;
+        this.clientId = clientId;
+        this.responsableMaintenanceId = responsableMaintenanceId;
     }
 
     // Getters et setters
@@ -26,30 +27,6 @@ public class Maintenance {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public int getClientId() {
-        return clientId;
-    }
-
-    public void setClientId(int clientId) {
-        this.clientId = clientId;
-    }
-
-    public int getOperateurId() {
-        return operateurId;
-    }
-
-    public void setOperateurId(int operateurId) {
-        this.operateurId = operateurId;
-    }
-
-    public int getResponsableMaintenanceId() {
-        return responsableMaintenanceId;
-    }
-
-    public void setResponsableMaintenanceId(int responsableMaintenanceId) {
-        this.responsableMaintenanceId = responsableMaintenanceId;
     }
 
     public String getType() {
@@ -74,5 +51,29 @@ public class Maintenance {
 
     public void setDateCreation(Date dateCreation) {
         this.dateCreation = dateCreation;
+    }
+
+    public int getOperateurId() {
+        return operateurId;
+    }
+
+    public void setOperateurId(int operateurId) {
+        this.operateurId = operateurId;
+    }
+
+    public int getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(int clientId) {
+        this.clientId = clientId;
+    }
+
+    public int getResponsableMaintenanceId() {
+        return responsableMaintenanceId;
+    }
+
+    public void setResponsableMaintenanceId(int responsableMaintenanceId) {
+        this.responsableMaintenanceId = responsableMaintenanceId;
     }
 }
