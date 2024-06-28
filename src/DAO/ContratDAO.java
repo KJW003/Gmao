@@ -17,7 +17,7 @@ public class ContratDAO {
 
     public int ajouter(Contrat contrat) {
         try (Connection con = DriverManager.getConnection(DAOUtils.URL, DAOUtils.LOGIN, DAOUtils.PASS);
-             PreparedStatement ps = con.prepareStatement("INSERT INTO contrat (clientId, dateDebut, dateFin, termes, montant) VALUES (?, ?, ?, ?, ?)")) {
+             PreparedStatement ps = con.prepareStatement("INSERT INTO contrat (id, description,  dateDebut, dateFin, termes, montant, clientId,) VALUES (?, ?, ?, ?, ?)")) {
             ps.setInt(1, contrat.getClientId());
             ps.setDate(2, new java.sql.Date(contrat.getDateDebut().getTime()));
             ps.setDate(3, new java.sql.Date(contrat.getDateFin().getTime()));

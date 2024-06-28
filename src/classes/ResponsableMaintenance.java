@@ -1,16 +1,17 @@
 package classes;
+
 public class ResponsableMaintenance {
     private int id;
     private String nom;
-    private String identifiant;
+    private String prenom;  // Ajouté
     private String specialisation;
     private int clientId;
 
     // Constructeur
-    public ResponsableMaintenance(int id, String nom, String identifiant, String specialisation, int clientId) {
+    public ResponsableMaintenance(int id, String nom, String prenom, String specialisation, int clientId) {
         this.id = id;
         this.nom = nom;
-        this.identifiant = identifiant;
+        this.prenom = prenom;  // Modifié
         this.specialisation = specialisation;
         this.clientId = clientId;
     }
@@ -32,12 +33,12 @@ public class ResponsableMaintenance {
         this.nom = nom;
     }
 
-    public String getIdentifiant() {
-        return identifiant;
+    public String getPrenom() {
+        return prenom;
     }
 
-    public void setIdentifiant(String identifiant) {
-        this.identifiant = identifiant;
+    public void setPrenom(String prenom) {
+        this.prenom = prenom;
     }
 
     public String getSpecialisation() {

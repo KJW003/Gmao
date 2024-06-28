@@ -18,10 +18,11 @@ public class DevisDAO {
 
     public int ajouter(Devis devis) {
         try (Connection con = DriverManager.getConnection(DAOUtils.URL, DAOUtils.LOGIN, DAOUtils.PASS);
-             PreparedStatement ps = con.prepareStatement("INSERT INTO devis (description, montant, validite) VALUES (?, ?, ?)")) {
-            ps.setString(1, devis.getDescription());
-            ps.setDouble(2, devis.getMontant());
-            ps.setString(3, devis.getValidite());
+             PreparedStatement ps = con.prepareStatement("INSERT INTO devis (id, description, montant, validite) VALUES (?, ?, ?, ?)")) {
+        	ps.setInt(1, devis.getId());
+        	ps.setString(2, devis.getDescription());
+            ps.setDouble(3, devis.getMontant());
+            ps.setString(4, devis.getValidite());
             return ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

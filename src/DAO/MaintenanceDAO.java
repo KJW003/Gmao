@@ -18,12 +18,13 @@ public class MaintenanceDAO {
 
     public int ajouter(Maintenance maintenance) {
         try (Connection con = DriverManager.getConnection(DAOUtils.URL, DAOUtils.LOGIN, DAOUtils.PASS);
-             PreparedStatement ps = con.prepareStatement("INSERT INTO maintenance (type, details, description, clientId, responsableMaintenanceId) VALUES (?, ?, ?, ?, ?)")) {
-            ps.setString(1, maintenance.getType());
-            ps.setString(2, maintenance.getDetails());
-            ps.setString(3, maintenance.getDescription());
-            ps.setInt(4, maintenance.getClientId());
-            ps.setInt(5, maintenance.getResponsableMaintenanceId());
+             PreparedStatement ps = con.prepareStatement("INSERT INTO maintenance (id, type, details, description, clientId, responsableMaintenanceId) VALUES (?, ?, ?, ?, ?, ?)")) {
+            ps.setInt(1, maintenance.getId());
+            ps.setString(2, maintenance.getType());
+            ps.setString(3, maintenance.getDetails());
+            ps.setString(4, maintenance.getDescription());
+            ps.setInt(5, maintenance.getClientId());
+            ps.setInt(6, maintenance.getResponsableMaintenanceId());
             return ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

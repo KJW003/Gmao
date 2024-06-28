@@ -1,4 +1,5 @@
 package DAO;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,11 +18,12 @@ public class ResponsableMaintenanceDAO {
 
     public int ajouter(ResponsableMaintenance responsable) {
         try (Connection con = DriverManager.getConnection(DAOUtils.URL, DAOUtils.LOGIN, DAOUtils.PASS);
-             PreparedStatement ps = con.prepareStatement("INSERT INTO responsableMaintenance (nom, identifiant, specialisation, clientId) VALUES (?, ?, ?, ?)")) {
-            ps.setString(1, responsable.getNom());
-            ps.setString(2, responsable.getIdentifiant());
-            ps.setString(3, responsable.getSpecialisation());
-            ps.setInt(4, responsable.getClientId());
+             PreparedStatement ps = con.prepareStatement("INSERT INTO responsableMaintenance (id, nom, prenom, specialisation, clientId) VALUES (?, ?, ?, ?, ?)")) {
+        	ps.setInt(1, responsable.getId());
+            ps.setString(2, responsable.getNom());
+            ps.setString(3, responsable.getPrenom());
+            ps.setString(4, responsable.getSpecialisation());
+            ps.setInt(5, responsable.getClientId());
             return ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -35,7 +37,7 @@ public class ResponsableMaintenanceDAO {
             ps.setInt(1, id);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    return new ResponsableMaintenance(rs.getInt("id"), rs.getString("nom"), rs.getString("identifiant"), rs.getString("specialisation"), rs.getInt("clientId"));
+                    return new ResponsableMaintenance(rs.getInt("id"), rs.getString("nom"), rs.getString("prenom"), rs.getString("specialisation"), rs.getInt("clientId"));
                 }
             }
         } catch (SQLException e) {
@@ -50,7 +52,7 @@ public class ResponsableMaintenanceDAO {
              PreparedStatement ps = con.prepareStatement("SELECT * FROM responsableMaintenance");
              ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
-                responsables.add(new ResponsableMaintenance(rs.getInt("id"), rs.getString("nom"), rs.getString("identifiant"), rs.getString("specialisation"), rs.getInt("clientId")));
+                responsables.add(new ResponsableMaintenance(rs.getInt("id"), rs.getString("nom"), rs.getString("prenom"), rs.getString("specialisation"), rs.getInt("clientId")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -60,9 +62,9 @@ public class ResponsableMaintenanceDAO {
 
     public int mettreAJour(ResponsableMaintenance responsable) {
         try (Connection con = DriverManager.getConnection(DAOUtils.URL, DAOUtils.LOGIN, DAOUtils.PASS);
-             PreparedStatement ps = con.prepareStatement("UPDATE responsableMaintenance SET nom = ?, identifiant = ?, specialisation = ?, clientId = ? WHERE id = ?")) {
+             PreparedStatement ps = con.prepareStatement("UPDATE responsableMaintenance SET id = ?, nom = ?, prenom = ?, specialisation = ?, clientId = ? WHERE id = ?")) {
             ps.setString(1, responsable.getNom());
-            ps.setString(2, responsable.getIdentifiant());
+            ps.setString(2, responsable.getPrenom());
             ps.setString(3, responsable.getSpecialisation());
             ps.setInt(4, responsable.getClientId());
             ps.setInt(5, responsable.getId());
