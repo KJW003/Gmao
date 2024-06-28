@@ -1,22 +1,19 @@
 package classes;
-import java.util.Date;
 
 public class Maintenance {
     private int id;
     private String type;
     private String details;
-    private Date dateCreation;
-    private int operateurId;
+    private String description;
     private int clientId;
     private int responsableMaintenanceId;
 
     // Constructeur
-    public Maintenance(int id, String type, String details, Date dateCreation, int operateurId, int clientId, int responsableMaintenanceId) {
+    public Maintenance(int id, String type, String details, String description, int clientId, int responsableMaintenanceId) {
         this.id = id;
         this.type = type;
         this.details = details;
-        this.dateCreation = dateCreation;
-        this.operateurId = operateurId;
+        this.description = description;
         this.clientId = clientId;
         this.responsableMaintenanceId = responsableMaintenanceId;
     }
@@ -46,20 +43,12 @@ public class Maintenance {
         this.details = details;
     }
 
-    public Date getDateCreation() {
-        return dateCreation;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDateCreation(Date dateCreation) {
-        this.dateCreation = dateCreation;
-    }
-
-    public int getOperateurId() {
-        return operateurId;
-    }
-
-    public void setOperateurId(int operateurId) {
-        this.operateurId = operateurId;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public int getClientId() {

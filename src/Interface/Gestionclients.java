@@ -1,6 +1,10 @@
 package Interface;
 	import javax.swing.*;
-	import java.awt.*;
+
+import DAO.ClientDAO;
+import classes.Client;
+
+import java.awt.*;
 	import java.util.ArrayList;
 	import java.util.List;
 	import java.awt.event.ActionListener;
@@ -14,7 +18,7 @@ package Interface;
 	    private JPanel panel_3;
 
 	    // Liste statique de clients pour l'exemple
-	    private List<Client> clients = new ArrayList<>();
+	    private List<Client> clients ;
 
 	    public static void main(String[] args) {
 	        EventQueue.invokeLater(() -> {
@@ -35,6 +39,7 @@ package Interface;
 	    }
 
 	    private void initialize() {
+	    	clients =  ClientDAO.getListeClients();
 	        frame = new JFrame();
 	        frame.getContentPane().setBackground(SystemColor.activeCaption);
 	        frame.setBounds(100, 100, 952, 643);
@@ -89,7 +94,7 @@ package Interface;
 	        	        	        	        	                // Afficher la liste des clients
 	        	        	        	        	                int yOffset = 20;
 	        	        	        	        	                for (Client client : clients) {
-	        	        	        	        	                    JLabel lblNomSociete = new JLabel("Nom de la société: " + client.getNomSociete());
+	        	        	        	        	                    JLabel lblNomSociete = new JLabel("Nom de la société: " + client.getNom());
 	        	        	        	        	                    lblNomSociete.setBounds(50, yOffset, 250, 20);
 	        	        	        	        	                    panel_2.add(lblNomSociete);
 	        	        	        	        
@@ -101,13 +106,21 @@ package Interface;
 	        	        	        	        	                    btnModifier.addActionListener(event -> {
 	        	        	        	        	                        // Nettoyer le panel_2 avant de charger les données du client
 	        	        	        	        	                        clearModifierClientWindow();
-	        	        	        	        
-	        	        	        	        	                        // Charger les données du client dans le formulaire de modification
+	        	        	        	        	                        
+	        	        	        	        	                        //Charger les données du client dans le formulaire de modification
+	        	        	        	        	                        JLabel lblIdModif = new JLabel("Id de la société:");
+	        	        	        	        	                        lblIdModif.setBounds(50, 50, 150, 20);
+	        	        	        	        	                        panel_2.add(lblIdModif);
+	        	        	        	        	                        
+	        	        	        	        	                        JTextField textFieldidModif = new JTextField(client.getId());
+	        	        	        	        	                        textFieldidModif.setBounds(210, 50, 200, 20);
+	        	        	        	        	                        panel_2.add(textFieldidModif);
+	        	        	        	        	                        
 	        	        	        	        	                        JLabel lblNomSocieteModif = new JLabel("Nom de la société:");
 	        	        	        	        	                        lblNomSocieteModif.setBounds(50, 50, 150, 20);
 	        	        	        	        	                        panel_2.add(lblNomSocieteModif);
 	        	        	        	        
-	        	        	        	        	                        JTextField textFieldNomSocieteModif = new JTextField(client.getNomSociete());
+	        	        	        	        	                        JTextField textFieldNomSocieteModif = new JTextField(client.getNom());
 	        	        	        	        	                        textFieldNomSocieteModif.setBounds(210, 50, 200, 20);
 	        	        	        	        	                        panel_2.add(textFieldNomSocieteModif);
 	        	        	        	        
@@ -123,7 +136,7 @@ package Interface;
 	        	        	        	        	                        lblNumeroRCCMModif.setBounds(50, 150, 150, 20);
 	        	        	        	        	                        panel_2.add(lblNumeroRCCMModif);
 	        	        	        	        
-	        	        	        	        	                        JTextField textFieldRCCMModif = new JTextField(client.getNumeroRCCM());
+	        	        	        	        	                        JTextField textFieldRCCMModif = new JTextField(client.getRCCM());
 	        	        	        	        	                        textFieldRCCMModif.setBounds(210, 150, 200, 20);
 	        	        	        	        	                        panel_2.add(textFieldRCCMModif);
 	        	        	        	        
@@ -155,15 +168,28 @@ package Interface;
 	        	        	        	        	                        // ActionListener pour le bouton Enregistrer (modification)
 	        	        	        	        	                        btnEnregistrerModif.addActionListener(e1 -> {
 	        	        	        	        	                            // Mettre à jour les valeurs du client
-	        	        	        	        	                            client.setNomSociete(textFieldNomSocieteModif.getText().trim());
+	        	        	        	        	                        	client.setId(Integer.parseInt(textFieldidModif.getText().trim()));
+	        	        	        	        	                            client.setNom(textFieldNomSocieteModif.getText().trim());
 	        	        	        	        	                            client.setNumeroIFU(textFieldIFUModif.getText().trim());
-	        	        	        	        	                            client.setNumeroRCCM(textFieldRCCMModif.getText().trim());
+	        	        	        	        	                            client.setRCCM(textFieldRCCMModif.getText().trim());
 	        	        	        	        	                            client.setAdresse(textFieldAdresseModif.getText().trim());
 	        	        	        	        	                            client.setCodeAPE(textFieldCodeAPEModif.getText().trim());
-	        	        	        	        
+	        	        	        	      
 	        	        	        	        	                            // Afficher un message de confirmation
 	        	        	        	        	                            JOptionPane.showMessageDialog(frame, "Client modifié avec succès!");
-	        	        	        	        
+	        	        	        	        	                            
+	        	        	        	        	                            //modif dans la DAO
+	        	        	        	        	        	                ClientDAO monClientDAO = new ClientDAO();
+	        	        	        	        	        					int retour = monClientDAO.mettreAJour(client);
+	        	        	        	        	        					// affichage du nombre de lignes ajoutées
+	        	        	        	        	        					// dans la bdd pour vérification
+	        	        	        	        	        					System.out.println("" + retour + " ligne ajoutée ");
+	        	        	        	        	        					if (retour == 1)
+	        	        	        	        	        						JOptionPane.showMessageDialog(frame, "article ajouté !");
+	        	        	        	        	        					else
+	        	        	        	        	        						JOptionPane.showMessageDialog(frame, "erreur ajout article",
+	        	        	        	        	        								"Erreur", JOptionPane.ERROR_MESSAGE);
+	        	        	        	        	        					
 	        	        	        	        	                            // Nettoyer le panel_2 après la modification
 	        	        	        	        	                            clearModifierClientWindow();
 	        	        	        	        	                        });
@@ -204,6 +230,14 @@ package Interface;
 	        	        	        	            clearModifierClientWindow();
 	        	        	        
 	        	        	        	            // Créer les composants pour ajouter un client
+	        	        	        	            JLabel lblId = new JLabel("Id de la société:");
+	        	        	        	            lblId.setBounds(50, 50, 150, 20);
+	        	        	        	            panel_2.add(lblId);
+	        	        	        
+	        	        	        	            JTextField textFieldId = new JTextField();
+	        	        	        	            textFieldId.setBounds(210, 50, 200, 20);
+	        	        	        	            panel_2.add(textFieldId);
+
 	        	        	        	            JLabel lblNomSociete = new JLabel("Nom de la société:");
 	        	        	        	            lblNomSociete.setBounds(50, 50, 150, 20);
 	        	        	        	            panel_2.add(lblNomSociete);
@@ -256,18 +290,29 @@ package Interface;
 	        	        	        	            // ActionListener pour le bouton Enregistrer
 	        	        	        	            btnEnregistrer.addActionListener(event -> {
 	        	        	        	                // Récupérer les valeurs des champs
-	        	        	        	                String nomSociete = textFieldNomSociete.getText().trim();
+	        	        	        	                int ID = Integer.parseInt(textFieldId.getText().trim());
+	        	        	        	            	String nomSociete = textFieldNomSociete.getText().trim();
 	        	        	        	                String numeroIFU = textFieldIFU.getText().trim();
 	        	        	        	                String numeroRCCM = textFieldRCCM.getText().trim();
 	        	        	        	                String adresse = textFieldAdresse.getText().trim();
 	        	        	        	                String codeAPE = textFieldCodeAPE.getText().trim();
 	        	        	        
 	        	        	        	                // Créer un nouvel objet Client
-	        	        	        	                Client nouveauClient = new Client(nomSociete, numeroIFU, numeroRCCM, adresse, codeAPE);
+	        	        	        	                Client nouveauClient = new Client(ID, nomSociete, numeroIFU, numeroRCCM, adresse, codeAPE);
 	        	        	        
-	        	        	        	                // Ajouter le client à la liste
-	        	        	        	                clients.add(nouveauClient);
-	        	        	        
+	        	        	        	                //Ajout vers la DAO
+	        	        	        	                ClientDAO monClientDAO = new ClientDAO();
+	        	        	        					int retour = monClientDAO.ajouter(nouveauClient);
+	        	        	        					// affichage du nombre de lignes ajoutées
+	        	        	        					// dans la bdd pour vérification
+	        	        	        					System.out.println("" + retour + " ligne ajoutée ");
+	        	        	        					if (retour == 1)
+	        	        	        						JOptionPane.showMessageDialog(frame, "article ajouté !");
+	        	        	        					else
+	        	        	        						JOptionPane.showMessageDialog(frame, "erreur ajout article",
+	        	        	        								"Erreur", JOptionPane.ERROR_MESSAGE);
+	        	        	        					
+	        	        	        	                
 	        	        	        	                // Afficher un message de confirmation
 	        	        	        	                JOptionPane.showMessageDialog(frame, "Client enregistré avec succès!");
 	        	        	        
@@ -316,60 +361,5 @@ package Interface;
 	        panel_2.revalidate();
 	    }
 
-	    private static class Client {
-	        private String nomSociete;
-	        private String numeroIFU;
-	        private String numeroRCCM;
-	        private String adresse;
-	        private String codeAPE;
-
-	        public Client(String nomSociete, String numeroIFU, String numeroRCCM, String adresse, String codeAPE) {
-	            this.nomSociete = nomSociete;
-	            this.numeroIFU = numeroIFU;
-	            this.numeroRCCM = numeroRCCM;
-	            this.adresse = adresse;
-	            this.codeAPE = codeAPE;
-	        }
-
-	        public String getNomSociete() {
-	            return nomSociete;
-	        }
-
-	        public void setNomSociete(String nomSociete) {
-	            this.nomSociete = nomSociete;
-	        }
-
-	        public String getNumeroIFU() {
-	            return numeroIFU;
-	        }
-
-	        public void setNumeroIFU(String numeroIFU) {
-	            this.numeroIFU = numeroIFU;
-	        }
-
-	        public String getNumeroRCCM() {
-	            return numeroRCCM;
-	        }
-
-	        public void setNumeroRCCM(String numeroRCCM) {
-	            this.numeroRCCM = numeroRCCM;
-	        }
-
-	        public String getAdresse() {
-	            return adresse;
-	        }
-
-	        public void setAdresse(String adresse) {
-	            this.adresse = adresse;
-	        }
-
-	        public String getCodeAPE() {
-	            return codeAPE;
-	        }
-
-	        public void setCodeAPE(String codeAPE) {
-	            this.codeAPE = codeAPE;
-	        }
-	    }
 	    
 	}

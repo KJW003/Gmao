@@ -1,5 +1,13 @@
 package Interface;
 import javax.swing.*;
+
+import DAO.DevisDAO;
+import DAO.MaintenanceDAO;
+import DAO.OperateurDAO;
+import classes.Devis;
+import classes.Maintenance;
+import classes.Operateur;
+
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -140,9 +148,29 @@ public class Gestionmaintenance {
                 System.out.println("Id de la maintenance : " + idMaintenance);
                 System.out.println("Description : " + description);
                 System.out.println("Statut : " + statut);
-
+                
+              //Ajout vers la DAO
+                Maintenance  maintenance = new Maintenance(
+                        Integer.parseInt(idMaintenance),
+                        typeMaintenance,
+                        description,
+                        statut,
+                        2,
+                        1
+                        );
+                MaintenanceDAO maMaintenanceDAO = new MaintenanceDAO();
+				int retour = maMaintenanceDAO.ajouter(maintenance);
+				// affichage du nombre de lignes ajoutées
+				// dans la bdd pour vérification
+				System.out.println("" + retour + " ligne ajoutée ");
+				if (retour == 1)
+					JOptionPane.showMessageDialog(frame, "article ajouté !");
+				else
+					JOptionPane.showMessageDialog(frame, "erreur ajout article",
+							"Erreur", JOptionPane.ERROR_MESSAGE);
+				
                 // Afficher la liste des demandes de maintenance (simulation)
-                addDemandeMaintenanceToList(typeMaintenance, idMaintenance, description, statut);
+                //addDemandeMaintenanceToList(typeMaintenance, idMaintenance, description, statut);
                 clearPanel(panel_2);
             });
         });
@@ -175,13 +203,13 @@ public class Gestionmaintenance {
             textFieldPrenom.setBounds(210, 150, 200, 20);
             panel_2.add(textFieldPrenom);
 
-            JLabel lblCompetence = new JLabel("Compétence:");
-            lblCompetence.setBounds(50, 200, 150, 20);
-            panel_2.add(lblCompetence);
+            JLabel lblSpecialisation = new JLabel("Spécialisation:");
+            lblSpecialisation.setBounds(50, 200, 150, 20);
+            panel_2.add(lblSpecialisation);
 
-            JTextField textFieldCompetence = new JTextField();
-            textFieldCompetence.setBounds(210, 200, 200, 20);
-            panel_2.add(textFieldCompetence);
+            JTextField textFieldSpecialisation = new JTextField();
+            textFieldSpecialisation.setBounds(210, 200, 200, 20);
+            panel_2.add(textFieldSpecialisation);
 
             JLabel lblTel = new JLabel("Téléphone:");
             lblTel.setBounds(50, 250, 150, 20);
@@ -200,25 +228,47 @@ public class Gestionmaintenance {
                 String idOperateur = textFieldIdOperateur.getText().trim();
                 String nom = textFieldNom.getText().trim();
                 String prenom = textFieldPrenom.getText().trim();
-                String competence = textFieldCompetence.getText().trim();
+                String specialisation = textFieldSpecialisation.getText().trim();
                 String tel = textFieldTel.getText().trim();
 
                 // Vérification des champs non vides
-                if (idOperateur.isEmpty() || nom.isEmpty() || prenom.isEmpty() || competence.isEmpty() || tel.isEmpty()) {
-                    highlightEmptyFields(textFieldIdOperateur, textFieldNom, textFieldPrenom, textFieldCompetence, textFieldTel);
+                if (idOperateur.isEmpty() || nom.isEmpty() || prenom.isEmpty() || specialisation.isEmpty() || tel.isEmpty()) {
+                    highlightEmptyFields(textFieldIdOperateur, textFieldNom, textFieldPrenom, textFieldSpecialisation, textFieldTel);
                     JOptionPane.showMessageDialog(frame, "Tous les champs doivent être remplis.", "Erreur", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
 
+              //Ajout vers la DAO
+                Operateur  Ope = new Operateur(
+                		Integer.parseInt(idOperateur),
+                		nom,
+                		prenom,
+                		specialisation,
+                		tel,
+                		2//client ID A modifier
+                        );
+                OperateurDAO monOperateurDAO = null;
+				@SuppressWarnings("null")
+				int retour = monOperateurDAO.ajouter(Ope);
+				// affichage du nombre de lignes ajoutées
+				// dans la bdd pour vérification
+				System.out.println("" + retour + " ligne ajoutée ");
+				if (retour == 1)
+					JOptionPane.showMessageDialog(frame, "article ajouté !");
+				else
+					JOptionPane.showMessageDialog(frame, "erreur ajout article",
+							"Erreur", JOptionPane.ERROR_MESSAGE);
+				
+				
                 // Affecter l'opérateur ici (simulation)
                 System.out.println("Id opérateur : " + idOperateur);
                 System.out.println("Nom : " + nom);
                 System.out.println("Prénom : " + prenom);
-                System.out.println("Compétence : " + competence);
+                System.out.println("Compétence : " + specialisation);
                 System.out.println("Téléphone : " + tel);
 
                 // Afficher la liste des opérateurs (simulation)
-                addOperateurToList(idOperateur, nom, prenom, competence, tel);
+                //addOperateurToList(idOperateur, nom, prenom, competence, tel);
                 clearPanel(panel_2);
             });
         });
@@ -281,7 +331,25 @@ public class Gestionmaintenance {
                     JOptionPane.showMessageDialog(frame, "Tous les champs doivent être remplis.", "Erreur", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
-
+                
+                //Ajout vers la DAO
+                Devis  devis = new Devis(
+                        Integer.parseInt(idDevis),//id
+                        descriptionDevis,//description
+                        Double.parseDouble(montantDevis),//montant
+                        statutDevis//statut
+                        );
+                DevisDAO monDevisDAO = new DevisDAO();
+				int retour = monDevisDAO.ajouter(devis);
+				// affichage du nombre de lignes ajoutées
+				// dans la bdd pour vérification
+				System.out.println("" + retour + " ligne ajoutée ");
+				if (retour == 1)
+					JOptionPane.showMessageDialog(frame, "article ajouté !");
+				else
+					JOptionPane.showMessageDialog(frame, "erreur ajout article",
+							"Erreur", JOptionPane.ERROR_MESSAGE);
+				
                 // Ajouter ou mettre à jour le devis ici (simulation)
                 System.out.println("Id du devis : " + idDevis);
                 System.out.println("Description : " + descriptionDevis);
@@ -289,7 +357,7 @@ public class Gestionmaintenance {
                 System.out.println("Montant : " + montantDevis);
 
                 // Afficher la liste des devis (simulation)
-                addDevisToList(idDevis, descriptionDevis, statutDevis);
+                //addDevisToList(idDevis, descriptionDevis, statutDevis);
                 clearPanel(panel_2);
             });
         });
@@ -306,19 +374,19 @@ public class Gestionmaintenance {
         frame.getContentPane().add(panel_3);
         panel_3.setLayout(null);
         
-                JButton btnNewButton = new JButton("Deconnexion");
-                btnNewButton.setBounds(10, 440, 156, 21);
-                panel_3.add(btnNewButton);
-                btnNewButton.setBackground(new Color(255, 255, 255));
-                btnNewButton.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
-                        frame.setVisible(false);
-                        utilisateur test23 = new utilisateur();
-                        test23.main(null);
-                    }
-                });
-                btnNewButton.setForeground(new Color(0, 0, 0));
-                btnNewButton.setFont(new Font("Times New Roman", Font.BOLD, 20));
+	    JButton btnNewButton = new JButton("Deconnexion");
+	    btnNewButton.setBounds(10, 440, 156, 21);
+	    panel_3.add(btnNewButton);
+	    btnNewButton.setBackground(new Color(255, 255, 255));
+	    btnNewButton.addActionListener(new ActionListener() {
+	        public void actionPerformed(ActionEvent e) {
+	            frame.setVisible(false);
+	            utilisateur test23 = new utilisateur();
+	            test23.main(null);
+	        }
+	    });
+	    btnNewButton.setForeground(new Color(0, 0, 0));
+	    btnNewButton.setFont(new Font("Times New Roman", Font.BOLD, 20));
     }
 
     // Méthode pour vider un panel
@@ -339,30 +407,4 @@ public class Gestionmaintenance {
         }
     }
 
-    // Méthode pour ajouter une demande de maintenance à la liste (simulation)
-    private void addDemandeMaintenanceToList(String type, String id, String description, String statut) {
-        JLabel label = new JLabel("Type: " + type + ", ID: " + id + ", Description: " + description + ", Statut: " + statut);
-        label.setBounds(10, panelListeOperateurs.getComponentCount() * 30, 500, 20);
-        panelListeOperateurs.add(label);
-        panelListeOperateurs.revalidate();
-        panelListeOperateurs.repaint();
-    }
-
-    // Méthode pour ajouter un opérateur à la liste (simulation)
-    private void addOperateurToList(String id, String nom, String prenom, String competence, String tel) {
-        JLabel label = new JLabel("ID: " + id + ", Nom: " + nom + ", Prénom: " + prenom + ", Compétence: " + competence + ", Téléphone: " + tel);
-        label.setBounds(10, panelListeOperateurs.getComponentCount() * 30, 600, 20);
-        panelListeOperateurs.add(label);
-        panelListeOperateurs.revalidate();
-        panelListeOperateurs.repaint();
-    }
-
-    // Méthode pour ajouter un devis à la liste (simulation)
-    private void addDevisToList(String id, String description, String statut) {
-        JLabel label = new JLabel("ID: " + id + ", Description: " + description + ", Statut: " + statut);
-        label.setBounds(10, panelListeDevis.getComponentCount() * 30, 500, 20);
-        panelListeDevis.add(label);
-        panelListeDevis.revalidate();
-        panelListeDevis.repaint();
-    }
 }

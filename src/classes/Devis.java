@@ -1,17 +1,16 @@
 package classes;
-import java.util.Date;
 
 public class Devis {
     private int id;
+    private String description;
     private double montant;
-    private Date dateCreation;
-    private boolean validite;
+    private String validite;
 
     // Constructeur
-    public Devis(int id, double montant, Date dateCreation, boolean validite) {
+    public Devis(int id, String description, double montant, String validite) {
         this.id = id;
         this.montant = montant;
-        this.dateCreation = dateCreation;
+        this.description = description;
         this.validite = validite;
     }
 
@@ -32,19 +31,19 @@ public class Devis {
         this.montant = montant;
     }
 
-    public Date getDateCreation() {
-        return dateCreation;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDateCreation(Date dateCreation) {
-        this.dateCreation = dateCreation;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public boolean isValidite() {
+    public String getValidite() {
         return validite;
     }
 
-    public void setValidite(boolean validite) {
+    public void setValidite(String validite) {
         this.validite = validite;
     }
 }

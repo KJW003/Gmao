@@ -1,4 +1,5 @@
 package DAO;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,13 +15,15 @@ public class OperateurDAO {
             System.err.println("Impossible de charger le pilote de BDD, ne pas oublier d'importer le fichier .jar dans le projet");
         }
     }
+
     public int ajouter(Operateur operateur) {
         try (Connection con = DriverManager.getConnection(DAOUtils.URL, DAOUtils.LOGIN, DAOUtils.PASS);
-             PreparedStatement ps = con.prepareStatement("INSERT INTO operateur (nom, identifiant, specialisation, clientId) VALUES (?, ?, ?, ?)")) {
+             PreparedStatement ps = con.prepareStatement("INSERT INTO operateur (nom, prenom, specialisation, telephone, clientId) VALUES (?, ?, ?, ?, ?)")) {
             ps.setString(1, operateur.getNom());
-            ps.setString(2, operateur.getIdentifiant());
+            ps.setString(2, operateur.getPrenom());
             ps.setString(3, operateur.getSpecialisation());
-            ps.setInt(4, operateur.getClientId());
+            ps.setString(4, operateur.getTelephone());
+            ps.setInt(5, operateur.getClientId());
             return ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -34,7 +37,7 @@ public class OperateurDAO {
             ps.setInt(1, id);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    return new Operateur(rs.getInt("id"), rs.getString("nom"), rs.getString("identifiant"), rs.getString("specialisation"), rs.getInt("clientId"));
+                    return new Operateur(rs.getInt("id"), rs.getString("nom"), rs.getString("prenom"), rs.getString("specialisation"), rs.getString("telephone"), rs.getInt("clientId"));
                 }
             }
         } catch (SQLException e) {
@@ -49,7 +52,7 @@ public class OperateurDAO {
              PreparedStatement ps = con.prepareStatement("SELECT * FROM operateur");
              ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
-                operateurs.add(new Operateur(rs.getInt("id"), rs.getString("nom"), rs.getString("identifiant"), rs.getString("specialisation"), rs.getInt("clientId")));
+                operateurs.add(new Operateur(rs.getInt("id"), rs.getString("nom"), rs.getString("prenom"), rs.getString("specialisation"), rs.getString("telephone"), rs.getInt("clientId")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -59,12 +62,13 @@ public class OperateurDAO {
 
     public int mettreAJour(Operateur operateur) {
         try (Connection con = DriverManager.getConnection(DAOUtils.URL, DAOUtils.LOGIN, DAOUtils.PASS);
-             PreparedStatement ps = con.prepareStatement("UPDATE operateur SET nom = ?, identifiant = ?, specialisation = ?, clientId = ? WHERE id = ?")) {
+             PreparedStatement ps = con.prepareStatement("UPDATE operateur SET nom = ?, prenom = ?, specialisation = ?, telephone = ?, clientId = ? WHERE id = ?")) {
             ps.setString(1, operateur.getNom());
-            ps.setString(2, operateur.getIdentifiant());
+            ps.setString(2, operateur.getPrenom());
             ps.setString(3, operateur.getSpecialisation());
-            ps.setInt(4, operateur.getClientId());
-            ps.setInt(5, operateur.getId());
+            ps.setString(4, operateur.getTelephone());
+            ps.setInt(5, operateur.getClientId());
+            ps.setInt(6, operateur.getId());
             return ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

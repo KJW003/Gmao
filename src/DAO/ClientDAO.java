@@ -44,7 +44,7 @@ public class ClientDAO {
         return null;
     }
 
-    public List<Client> getListeClients() {
+    public static List<Client> getListeClients() {
         List<Client> clients = new ArrayList<>();
         try (Connection con = DriverManager.getConnection(DAOUtils.URL, DAOUtils.LOGIN, DAOUtils.PASS);
              PreparedStatement ps = con.prepareStatement("SELECT * FROM client");

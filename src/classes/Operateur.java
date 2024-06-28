@@ -1,17 +1,20 @@
 package classes;
+
 public class Operateur {
     private int id;
     private String nom;
-    private String identifiant;
+    private String prenom;
     private String specialisation;
+    private String telephone;
     private int clientId;
 
     // Constructeur
-    public Operateur(int id, String nom, String identifiant, String specialisation, int clientId) {
+    public Operateur(int id, String nom, String prenom, String specialisation, String telephone, int clientId) {
         this.id = id;
         this.nom = nom;
-        this.identifiant = identifiant;
+        this.prenom = prenom;
         this.specialisation = specialisation;
+        this.telephone = telephone;
         this.clientId = clientId;
     }
 
@@ -32,12 +35,12 @@ public class Operateur {
         this.nom = nom;
     }
 
-    public String getIdentifiant() {
-        return identifiant;
+    public String getPrenom() {
+        return prenom;
     }
 
-    public void setIdentifiant(String identifiant) {
-        this.identifiant = identifiant;
+    public void setPrenom(String prenom) {
+        this.prenom = prenom;
     }
 
     public String getSpecialisation() {
@@ -48,6 +51,14 @@ public class Operateur {
         this.specialisation = specialisation;
     }
 
+    public String getTelephone() {
+        return telephone;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
+
     public int getClientId() {
         return clientId;
     }
@@ -56,4 +67,3 @@ public class Operateur {
         this.clientId = clientId;
     }
 }
-	
